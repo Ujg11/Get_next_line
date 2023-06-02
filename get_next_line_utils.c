@@ -3,16 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojimenez <ojimenez@student.42barcel>       +#+  +:+       +#+        */
+/*   By: ojimenez <ojimenez@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:55:44 by ojimenez          #+#    #+#             */
-/*   Updated: 2023/05/31 12:00:08 by ojimenez         ###   ########.fr       */
+/*   Updated: 2023/06/02 17:39:26 by ojimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strchr(const char *str, int c)
+size_t	ft_strlen(char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
+char	*ft_strchr(char *str, int c)
 {
 	int		i;
 	char	*s;
@@ -30,7 +40,27 @@ char	*ft_strchr(const char *str, int c)
 	return (NULL);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strdup(char *s1)
+{
+	char	*copy;
+	size_t	len;
+	size_t	i;
+
+	i = 0;
+	len = ft_strlen((char *)s1) + 1;
+	copy = (char *)malloc(len * sizeof(char));
+	if (!copy)
+		return (NULL);
+	while (s1[i])
+	{
+		copy[i] = s1[i];
+		i++;
+	}
+	copy[i] = '\0';
+	return (copy);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
 	size_t	i;
