@@ -6,7 +6,7 @@
 /*   By: ojimenez <ojimenez@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:55:44 by ojimenez          #+#    #+#             */
-/*   Updated: 2023/06/02 17:39:26 by ojimenez         ###   ########.fr       */
+/*   Updated: 2023/06/07 14:23:59 by ojimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,31 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	str[i] = '\0';
 	return (str);
+}
+
+char	*ft_substr(char *s, unsigned int start, size_t len)
+{
+	char	*sub;
+	size_t	i;
+	size_t	fin;
+
+	fin = 0;
+	i = 0;
+	if (!s)
+		return (NULL);
+	if (start >= ft_strlen(s))
+		return (ft_strdup(""));
+	fin = ft_strlen(s + start);
+	if (fin < len)
+		len = fin;
+	sub = (char *)malloc(len + 1);
+	if (!sub)
+		return (NULL);
+	while (s[start + i] && i < len)
+	{
+		sub[i] = s[start + i];
+		i++;
+	}
+	sub[i] = '\0';
+	return (sub);
 }
