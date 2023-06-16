@@ -6,7 +6,7 @@
 /*   By: ojimenez <ojimenez@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 10:20:20 by ojimenez          #+#    #+#             */
-/*   Updated: 2023/06/16 13:57:08 by ojimenez         ###   ########.fr       */
+/*   Updated: 2023/06/16 15:57:20 by ojimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static char	*ft_cutstr(char *newline)
 
 	i = 0;
 	j = 0;
+	if (!newline)
+		return (NULL);
 	while (newline[i] != '\n' && newline[i])
 		i++;
 	if (newline[i] == '\0' || newline[1] == '\0')
@@ -34,12 +36,9 @@ static char	*ft_cutstr(char *newline)
 	j = ft_strlen(newline);
 	backline = ft_substr(newline, i + 1, j - i);
 	if (!backline)
-		return (NULL);
+		return (free_buffer(newline));
 	if (backline[0] == '\0')
-	{
-		free(backline);
-		backline = NULL;
-	}
+		return (free_buffer(backline));
 	newline[i + 1] = '\0';
 	return (backline);
 }

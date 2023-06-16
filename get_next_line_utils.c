@@ -6,7 +6,7 @@
 /*   By: ojimenez <ojimenez@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:55:44 by ojimenez          #+#    #+#             */
-/*   Updated: 2023/06/16 14:22:42 by ojimenez         ###   ########.fr       */
+/*   Updated: 2023/06/16 15:37:13 by ojimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*ft_strchr(char *str, int c)
 
 	i = 0;
 	if (!str)
-		return (NULL);
+		return (free_buffer(str));
 	s = (char *)str;
 	while (s[i])
 	{
@@ -52,11 +52,11 @@ char	*ft_strdup(char *s1)
 
 	i = 0;
 	if (!s1)
-		return (NULL);
+		return (free_buffer(s1));
 	len = ft_strlen((char *)s1) + 1;
 	copy = (char *)malloc(len * sizeof(char));
 	if (!copy)
-		return (NULL);
+		return (free_buffer(s1));
 	while (s1[i])
 	{
 		copy[i] = s1[i];
@@ -111,7 +111,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 		len = fin;
 	sub = (char *)malloc(len + 1);
 	if (!sub)
-		return (NULL);
+		return (free_buffer(s));
 	while (s[start + i] && i < len)
 	{
 		sub[i] = s[start + i];
