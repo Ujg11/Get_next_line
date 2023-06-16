@@ -6,7 +6,7 @@
 /*   By: ojimenez <ojimenez@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:55:44 by ojimenez          #+#    #+#             */
-/*   Updated: 2023/06/07 14:23:59 by ojimenez         ###   ########.fr       */
+/*   Updated: 2023/06/16 14:22:42 by ojimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ size_t	ft_strlen(char *s)
 	size_t	i;
 
 	i = 0;
+	if (!s)
+		return (0);
 	while (s[i])
 		i++;
 	return (i);
@@ -28,6 +30,8 @@ char	*ft_strchr(char *str, int c)
 	char	*s;
 
 	i = 0;
+	if (!str)
+		return (NULL);
 	s = (char *)str;
 	while (s[i])
 	{
@@ -47,6 +51,8 @@ char	*ft_strdup(char *s1)
 	size_t	i;
 
 	i = 0;
+	if (!s1)
+		return (NULL);
 	len = ft_strlen((char *)s1) + 1;
 	copy = (char *)malloc(len * sizeof(char));
 	if (!copy)
@@ -68,20 +74,22 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	i = 0;
 	j = 0;
+	if (!s1)
+	{
+		free(s1);
+		s1 = NULL;
+		return (ft_strdup(s2));
+	}
 	str = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!str)
-		return (NULL);
+		return (free_buffer(str));
 	while (s1[i])
 	{
 		str[i] = s1[i];
 		i++;
 	}
 	while (s2[j])
-	{
-		str[i] = s2[j];
-		i++;
-		j++;
-	}
+		str[i++] = s2[j++];
 	str[i] = '\0';
 	return (str);
 }

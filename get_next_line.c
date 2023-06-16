@@ -6,13 +6,20 @@
 /*   By: ojimenez <ojimenez@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 10:20:20 by ojimenez          #+#    #+#             */
-/*   Updated: 2023/06/07 15:06:33 by ojimenez         ###   ########.fr       */
+/*   Updated: 2023/06/16 13:57:08 by ojimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_cutstr(char *newline)
+char	*free_buffer(char *buff)
+{
+	free(buff);
+	buff = NULL;
+	return (NULL);
+}
+
+static char	*ft_cutstr(char *newline)
 {
 	char	*backline;
 	size_t	i;
@@ -23,12 +30,12 @@ char	*ft_cutstr(char *newline)
 	while (newline[i] != '\n' && newline[i])
 		i++;
 	if (newline[i] == '\0' || newline[1] == '\0')
-		return (0);
+		return (NULL);
 	j = ft_strlen(newline);
 	backline = ft_substr(newline, i + 1, j - i);
 	if (!backline)
 		return (NULL);
-	if (*backline == '\0')
+	if (backline[0] == '\0')
 	{
 		free(backline);
 		backline = NULL;
@@ -37,30 +44,7 @@ char	*ft_cutstr(char *newline)
 	return (backline);
 }
 
-/*char	*ft_cutstr(char *newline)
-{
-	char	*backline;
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	j = 0;
-	while (newline[i] != '\n' && newline[i])
-		i++;
-	while (newline[j])
-		j++;
-	if (newline[i] == '\0' || newline[1] == '\0')
-		return (0);
-	backline = (char *)malloc((j - i) * sizeof(char));
-	if (!backline)
-		return (NULL);
-	backline = ft_strchr(newline, '\n');
-	backline++;
-	newline[i] = '\0';
-	return (backline);
-}*/
-
-char	*ft_read_line(char *backline, int fd, char *buffer)
+static char	*ft_read_line(char *backline, int fd, char *buffer)
 {
 	int		numchar;
 	char	*aux;
@@ -71,7 +55,7 @@ char	*ft_read_line(char *backline, int fd, char *buffer)
 	{
 		numchar = read(fd, buffer, BUFFER_SIZE);
 		if (numchar == -1)
-			return (NULL);
+			return (free_buffer(backline));
 		if (numchar == 0)
 			break ;
 		buffer[numchar] = '\0';
@@ -91,7 +75,7 @@ char	*ft_read_line(char *backline, int fd, char *buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	*backline = NULL;
+	static char	*backline;
 	char		*newline;
 	char		*buffer;
 
@@ -100,19 +84,11 @@ char	*get_next_line(int fd)
 	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
-	if (!backline)
-		backline = ft_strdup("");
 	newline = ft_read_line(backline, fd, buffer);
 	free(buffer);
 	buffer = NULL;
 	if (!newline)
-	{
-		free(backline);
-		backline = NULL;
-		free(newline);
-		newline = NULL;
 		return (NULL);
-	}
 	backline = ft_cutstr(newline);
 	return (newline);
 }
