@@ -6,7 +6,7 @@
 /*   By: ojimenez <ojimenez@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:55:44 by ojimenez          #+#    #+#             */
-/*   Updated: 2023/06/16 15:37:13 by ojimenez         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:14:01 by ojimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*ft_strchr(char *str, int c)
 
 	i = 0;
 	if (!str)
-		return (free_buffer(str));
+		return (NULL);
 	s = (char *)str;
 	while (s[i])
 	{
@@ -52,11 +52,11 @@ char	*ft_strdup(char *s1)
 
 	i = 0;
 	if (!s1)
-		return (free_buffer(s1));
+		return (free_buffer(&s1));
 	len = ft_strlen((char *)s1) + 1;
 	copy = (char *)malloc(len * sizeof(char));
 	if (!copy)
-		return (free_buffer(s1));
+		return (NULL);
 	while (s1[i])
 	{
 		copy[i] = s1[i];
@@ -76,13 +76,12 @@ char	*ft_strjoin(char *s1, char *s2)
 	j = 0;
 	if (!s1)
 	{
-		free(s1);
 		s1 = NULL;
 		return (ft_strdup(s2));
 	}
 	str = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!str)
-		return (free_buffer(str));
+		return (free_buffer(&s1));
 	while (s1[i])
 	{
 		str[i] = s1[i];
@@ -91,6 +90,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[j])
 		str[i++] = s2[j++];
 	str[i] = '\0';
+	free_buffer(&s1);
 	return (str);
 }
 
@@ -111,7 +111,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 		len = fin;
 	sub = (char *)malloc(len + 1);
 	if (!sub)
-		return (free_buffer(s));
+		return (free_buffer(&s));
 	while (s[start + i] && i < len)
 	{
 		sub[i] = s[start + i];

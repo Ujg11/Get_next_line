@@ -17,7 +17,7 @@ int	main(void)
 
 	// Llama a la función get_next_line para leer líneas del archivo
 	int i = -1;
-	while (++i < 4)
+	while (++i < 8)
 	{
 		line = get_next_line(fd);
 		//printf("Línea leída: %s\n", line);
