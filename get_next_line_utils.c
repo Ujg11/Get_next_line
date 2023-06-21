@@ -6,7 +6,7 @@
 /*   By: ojimenez <ojimenez@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:55:44 by ojimenez          #+#    #+#             */
-/*   Updated: 2023/06/21 15:14:01 by ojimenez         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:52:17 by ojimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,9 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	fin = ft_strlen(s + start);
 	if (fin < len)
 		len = fin;
-	sub = (char *)malloc(len + 1);
+	sub = (char *)malloc((len + 1) * sizeof(char));
 	if (!sub)
-		return (free_buffer(&s));
+		return (NULL);
 	while (s[start + i] && i < len)
 	{
 		sub[i] = s[start + i];

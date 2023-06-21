@@ -6,7 +6,7 @@
 /*   By: ojimenez <ojimenez@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 10:20:20 by ojimenez          #+#    #+#             */
-/*   Updated: 2023/06/21 15:37:09 by ojimenez         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:59:10 by ojimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ char	*get_next_line(int fd)
 		backline = NULL;
 		return (free_buffer(&newline));
 	}
+	backline = NULL;
 	backline = ft_cutstr(newline);
 	return (newline);
 }
