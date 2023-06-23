@@ -6,7 +6,7 @@
 /*   By: ojimenez <ojimenez@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:55:44 by ojimenez          #+#    #+#             */
-/*   Updated: 2023/06/21 15:52:17 by ojimenez         ###   ########.fr       */
+/*   Updated: 2023/06/23 16:15:36 by ojimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ char	*ft_strdup(char *s1)
 
 	i = 0;
 	if (!s1)
-		return (free_buffer(&s1));
-	len = ft_strlen((char *)s1) + 1;
+		return (NULL);
+	len = ft_strlen(s1) + 1;
 	copy = (char *)malloc(len * sizeof(char));
 	if (!copy)
 		return (NULL);
@@ -75,10 +75,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	i = 0;
 	j = 0;
 	if (!s1)
-	{
-		s1 = NULL;
 		return (ft_strdup(s2));
-	}
 	str = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!str)
 		return (free_buffer(&s1));
@@ -102,6 +99,8 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 
 	fin = 0;
 	i = 0;
+	if (!s)
+		return (free_buffer(&s));
 	if (!s)
 		return (NULL);
 	if (start >= ft_strlen(s))

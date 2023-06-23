@@ -1,5 +1,6 @@
 #include <fcntl.h>
 #include <stdio.h>
+#include <string.h>
 #include "get_next_line.h"
 
 int	main(void)
@@ -7,6 +8,11 @@ int	main(void)
 	int		fd;
 	char	*line;
 
+	char arr[] = "HOLA";
+
+	char res = strlen(arr);
+	char res2 = ft_strlen(arr);
+	printf("%d\n%d\n", res, res2);
 	// Abre el archivo que deseas leer
 	fd = open("arxiu.txt", O_RDONLY);
 	if (fd == -1)

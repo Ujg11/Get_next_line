@@ -6,7 +6,7 @@
 /*   By: ojimenez <ojimenez@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 10:20:20 by ojimenez          #+#    #+#             */
-/*   Updated: 2023/06/21 15:59:10 by ojimenez         ###   ########.fr       */
+/*   Updated: 2023/06/23 16:15:14 by ojimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,39 +27,41 @@ static char	*ft_cutstr(char *newline)
 
 	i = 0;
 	j = 0;
-	if (!newline)
+	if (newline[0] == '\0')
 		return (NULL);
 	while (newline[i] != '\n' && newline[i])
 		i++;
-	if (newline[i] == '\0' || newline[1] == '\0')
-		return (NULL);
 	j = ft_strlen(newline);
-	backline = ft_substr(newline, i + 1, j - i);
+	if (newline[i] == '\n')
+		backline = ft_substr(newline, i + 1, j - i);
+	else
+		return (NULL);
 	if (!backline)
-		return (free_buffer(&newline));
+		return (NULL);
 	if (backline[0] == '\0')
 		return (free_buffer(&backline));
 	newline[i + 1] = '\0';
 	return (backline);
 }
 
-static char	*ft_read_line(char *backline, int fd, char *buffer)
+static char	*ft_read_line(int fd, char *backline)
 {
 	int		numchar;
-	char	*s;
+	char	*buffer;
 
 	numchar = 1;
-	while (numchar > 0)
+	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buffer)
+		return (free_buffer(&backline));
+	while (numchar > 0 && !ft_strchr(backline, '\n'))
 	{
 		numchar = read(fd, buffer, BUFFER_SIZE);
 		if (numchar > 0)
 		{
 			buffer[numchar] = '\0';
 			backline = ft_strjoin(backline, buffer);
-			s = ft_strchr(backline, '\n');
-			if (s)
+			if (ft_strchr(backline, '\n'))
 			{
-				s = NULL;
 				free_buffer(&buffer);
 				return (backline);
 			}
@@ -71,24 +73,49 @@ static char	*ft_read_line(char *backline, int fd, char *buffer)
 	return (backline);
 }
 
+char	*clean_newline(char *line, char *newline)
+{
+	size_t	i;
+
+	i = 0;
+	if (!newline)
+		return (free_buffer(&newline));
+	while (newline[i])
+		i++;
+	line = malloc((i + 1) * sizeof(char));
+	if (!line)
+		return (free_buffer(&newline));
+	i = 0;
+	while (newline[i])
+	{
+		line[i] = newline[i];
+			i++;
+	}
+	line[i] = '\0';
+	free_buffer(&newline);
+	return (line);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*backline = {0};
 	char		*newline;
-	char		*buffer;
+	char		*line;
 
+	line = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!buffer)
-		return (NULL);
-	newline = ft_read_line(backline, fd, buffer);
+	newline = ft_read_line(fd, backline);
 	if (!newline)
 	{
 		backline = NULL;
-		return (free_buffer(&newline));
+		return (NULL);
 	}
 	backline = NULL;
+	free_buffer(&backline);
 	backline = ft_cutstr(newline);
-	return (newline);
+	line = clean_newline(line, newline);
+	if (!line)
+		return (free_buffer(&backline));
+	return (line);
 }

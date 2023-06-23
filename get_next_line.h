@@ -6,7 +6,7 @@
 /*   By: ojimenez <ojimenez@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 10:22:02 by ojimenez          #+#    #+#             */
-/*   Updated: 2023/06/21 12:22:25 by ojimenez         ###   ########.fr       */
+/*   Updated: 2023/06/23 15:44:48 by ojimenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ char	*ft_strchr(char *str, int c);
 char	*ft_strdup(char *s1);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_substr(char *s, unsigned int start, size_t len);
+char	*clean_newline(char *line, char *newline);
 
 #endif
